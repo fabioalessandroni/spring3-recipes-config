@@ -1,0 +1,19 @@
+server:
+  port: 8080
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: players
+          uri: ${PLAYERS_URI:lb://football-server}
+          predicates:
+            - Path=/api/players/**
+          filters:
+            - StripPrefix=1
+
+        - id: albums
+          uri: ${ALBUMS_URI:lb://albums-server}
+          predicates:
+            - Path=/api/albums/**
+          filters:
+            - StripPrefix=1
